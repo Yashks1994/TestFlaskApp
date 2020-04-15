@@ -1,0 +1,17 @@
+---
+- hosts: webserver
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: install docker-py
+      pip: name=docker-py
+
+    - name: Build the Docker image
+      docker_image:
+        name: flaskapp
+        state: build
+    
+    - name: Run the docker container
+      docker_container:
+        image: flaskapp
+        state: running
